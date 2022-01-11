@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="stylesheet" href="%PUBLIC_URL%/Demo/assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="%PUBLIC_URL%/Demo/assets/fonts/themify-icons/themify-icons.css">
+    <link rel="icon" href="%PUBLIC_URL%/Demo/assets/img/title-logo/title-logo.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css" integrity="sha512-6lLUdeQ5uheMFbWm3CP271l14RsX1xtx+J5x2yeIDkkiBpeVTNhTqijME7GgRKKi6hCqovwCoBTlRBEC20M8Mg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="%PUBLIC_URL%/Demo/assets/css/responsive.css">
+    <title>SCC's quiz</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+    
+
+        var header = document.getElementsByClassName('header');
+        var mobileMenu = document.getElementById('mobile-menu');
+        var headerHeight= header.clientHeight;
+        
+        // Close, open Menu
+        // mobileMenu.onClick = function(){
+        //     var isClosed = header.clientHeight === headerHeight;
+        //     if(isClosed){
+        //         header.style.height = 'auto';
+        //     }
+        //     else{
+        //         header.style.height = null;
+        //     }
+        // }
+        // mobile-menu
+
+        // Automatically close when choosing menu
+        var menuItems = document.querySelectorAll('#nav li a[href*="#"]');
+        for(var i = 0; i<menuItems.length; i++)
+        {
+            
+            var menuItem = menuItems[i];
+            menuItem.onClick = function(){
+                var isParentMenu = this.nextElementSibling && this.nextElementSibling.classList.contains('subnav');
+                if(isParentMenu){
+                    // eslint-disable-next-line no-restricted-globals
+                    event.preventDefault();
+                }
+                else {
+                    header.style.height=null
+                }
+            } 
+        }
+
+    </script>
+<script>
+            // Toast function
+            function toast({title ='',
+            message ='',
+            type = 'info',
+            duration = 3000}){
+                const main = document.getElementById('toast');
+                if(main){
+                    const toast  = document.createElement('div')
+                    
+                    // Auto remove toast
+                    const autoRemoveId = setTimeout(function(){
+                        main.removeChild(toast);
+                    }, duration + 1000);
+
+                    // Remove toast when clicked
+                    toast.onClick = function(e){
+                        if(e.target.closest('.toast__close')){
+                            main.removeChild(toast);
+                            clearTimeout(autoRemoveId);
+                        }
+                    }
+
+                    const icons = {
+                        success: 'fas fa-check-circle',
+                        info: 'fas fa-info-circle',
+                        warning: 'fas fa-exclamation-circle',
+                        error: 'fas fa-exclamation-circle',
+                    };
+                    const icon = icons[type];
+                    const delay = (duration/1000).toFixed(2);
+                    
+                    toast.classList.add('toast', `toast--${type}`);
+                    toast.style.animation = `
+                    slideInLeft ease 0.3s, fadeOut linear 1s ${delay}s forwards
+                    `;
+                    toast.innerHTML = `
+                    <div class="toast__icon">
+                        <i class="${icon}"></i>
+                    </div>
+                    <div class="toast__body">
+                        <h3 class="toast__title">${title}</h3>
+                        <p class="toast__msg">${message}</p>
+                    </div>
+                    <div class="toast__close">
+                        <i class="fas fa-times"></i>
+                    </div>
+                `;
+                main.appendChild(toast);
+                }
+            }
+            
+            function showSuccessToast(){
+                toast({
+                title: 'Success',
+                message: 'Pressing green button',
+                type: 'success',
+                duration: 5000,
+            });
+            }
+            function showErrorToast(){
+                toast({
+                title: 'Error',
+                message: 'Pressing Error button',
+                type: 'error',
+                duration: 5000,
+            });
+            }
+
+
+        </script>
+    
+    <div id="root"></div>
+    
+  </body>
+</html>
